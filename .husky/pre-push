@@ -21,7 +21,7 @@ function current_branch() {
   elif [ $branch == $masterBranch ]
   then
     echo "自动构建并上传 master 分支代码"
-    npm run build:prod
+    #npm run build:prod
   fi
 }
 
