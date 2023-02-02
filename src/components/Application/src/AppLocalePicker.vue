@@ -1,21 +1,11 @@
 <template>
-  <el-dropdown placement="bottom" trigger="click" @command="toggleLocale">
-    <div>
-      <span v-if="showText">{{ language }}</span>
-    </div>
-    <template #dropdown>
-      <el-dropdown-menu>
-        <el-dropdown-item
-          v-for="language_item of Object.values(LOCALE)"
-          :command="language_item[0]"
-          >{{ language_item[1] }}</el-dropdown-item
-        >
-      </el-dropdown-menu>
-    </template>
-  </el-dropdown>
+  <Dropdown :dropdownOption="createDropdown">
+    <span v-if="showText">{{ language }}</span>
+  </Dropdown>
 </template>
 
 <script setup lang="ts">
+  import { Dropdown } from "@/components/Dropdown";
   import { unref, computed } from "vue";
   import type { LocaleType } from "#/setting";
   import { useLocale } from "@/locales/useLocale";
@@ -47,6 +37,40 @@
       }
     }
   });
+
+  /**
+   * 依据项目语言配置生成下拉菜单所渲染的菜单项数组
+   * @return 下拉菜单所渲染的菜单项数组
+   */
+  const languageArr = function () {
+    return Object.values(LOCALE).map((localeItem) => {
+      return {
+        attr: {
+          command: localeItem[0],
+        },
+        content: localeItem[1],
+      };
+    });
+  };
+
+  /**
+   * 多语言下拉菜单的渲染配置对象
+   */
+  const createDropdown = {
+    icon: {
+      prefixIcon: "IonLanguage",
+      isSvgIcon: true,
+      size: "16",
+    },
+    attr: {
+      placement: "bottom",
+      trigger: "click",
+    },
+    event: {
+      command: toggleLocale,
+    },
+    itemArr: languageArr(),
+  };
 </script>
 
 <style scoped lang="less">

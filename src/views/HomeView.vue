@@ -1,10 +1,12 @@
 <template>
+  <AppLocalePicker :show-text="true"></AppLocalePicker>
   <div class="container">
-    <h1>Project Basic Framework</h1>
+    <h1>ElementPlus Low Code</h1>
   </div>
 </template>
 
 <script setup lang="ts">
+  import { AppLocalePicker } from "@/components/Application";
 </script>
 
 <style scoped lang="less">
